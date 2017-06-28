@@ -467,6 +467,7 @@ public class AppConfig {
 
         private List<String> csrfIgnoreUris = Collections.emptyList();
         private List<String> xssIgnoreUris = Collections.emptyList();
+        private List<String> openRedirectAllowedUris = Collections.emptyList();
         private ResponseHeaders responseHeaders = new ResponseHeaders();
 
         /**
@@ -523,6 +524,7 @@ public class AppConfig {
         public void setXssIgnoreUris(List<String> xssIgnoreUris) {
             if (xssIgnoreUris != null) {
                 for (String xssUri : xssIgnoreUris) {
+
                     if (xssUri != null) {
                         if (xssUri.isEmpty()) {
                             throw new IllegalArgumentException("XSS ignore URI in the app's config cannot be empty.");
@@ -540,6 +542,43 @@ public class AppConfig {
                 this.xssIgnoreUris = Collections.emptyList();
             }
         }
+
+        /**
+         * Returns the list of URI's that are allowed to redirect.
+         *
+         * @return list of URI's that are allowed to redirect.
+         */
+        public List<String> getOpenRedirectAllowedUris() {
+            return openRedirectAllowedUris;
+        }
+
+        /**
+         * Sets the list of URI's that are allowed to redirect.
+         *
+         * @param openRedirectAllowedUris the list of URI's that are allowed to redirect.
+         * @throws IllegalArgumentException if URIs in {@code openRedirectAllowedUris} is empty, null or doesn't start with '/'.
+         */
+        public void setOpenRedirectAllowedUris(List<String> openRedirectAllowedUris) {
+            if (openRedirectAllowedUris != null) {
+                for (String openRedirectUri : openRedirectAllowedUris) {
+                    if (openRedirectUri != null) {
+                        if (openRedirectUri.isEmpty()) {
+                            throw new IllegalArgumentException("Redirect allowed URI in the app's config cannot be empty.");
+                        } else if (!openRedirectUri.startsWith("/")) {
+                            throw new IllegalArgumentException(
+                                    "Redirect allowed URI in the app's config must start with a '/'. Instead found '" +
+                                            openRedirectUri.charAt(0) + "' at the beginning of the ignore URI '" + openRedirectUri + "'.");
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Redirect allowed URI in the app's config cannot be 'null'.");
+                    }
+                }
+                this.openRedirectAllowedUris = openRedirectAllowedUris;
+            } else {
+                this.openRedirectAllowedUris = Collections.emptyList();
+            }
+        }
+
 
         /**
          * Returns HTTP response headers of this security configuration.

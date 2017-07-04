@@ -524,7 +524,6 @@ public class AppConfig {
         public void setXssIgnoreUris(List<String> xssIgnoreUris) {
             if (xssIgnoreUris != null) {
                 for (String xssUri : xssIgnoreUris) {
-
                     if (xssUri != null) {
                         if (xssUri.isEmpty()) {
                             throw new IllegalArgumentException("XSS ignore URI in the app's config cannot be empty.");
@@ -578,7 +577,6 @@ public class AppConfig {
                 this.openRedirectAllowedUris = Collections.emptyList();
             }
         }
-
 
         /**
          * Returns HTTP response headers of this security configuration.
